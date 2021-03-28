@@ -40,16 +40,22 @@
 	<!-- Initialize Firebase -->
 	<script src="/__/firebase/init.js"></script>
 
-	<!-- Sapper creates a <script> tag containing `src/client.js`
-	     and anything else it needs to hydrate the app and
-	     initialise the router -->
-	%sapper.scripts%
-
 	<!-- FirebaseUI -->
 	<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 	<script>
 		var firebaseAuthUi = new firebaseui.auth.AuthUI(firebase.auth());
 		var db = firebase.firestore();
+		if (location.hostname === "localhost") {
+			db.settings({
+				host: "localhost:8080",
+				ssl: false
+			});
+		}
 	</script>
+	
+	<!-- Sapper creates a <script> tag containing `src/client.js`
+	     and anything else it needs to hydrate the app and
+	     initialise the router -->
+	%sapper.scripts%
 </body>
 </html>
